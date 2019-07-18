@@ -25,6 +25,9 @@ import * as presenceGetStateConfig from './endpoints/presence/get_state';
 import * as presenceSetStateConfig from './endpoints/presence/set_state';
 import * as presenceHereNowConfig from './endpoints/presence/here_now';
 
+// Objects API
+import * as createUserEndpointConfig from './endpoints/users/create_user';
+
 import * as auditEndpointConfig from './endpoints/access_manager/audit';
 import * as grantEndpointConfig from './endpoints/access_manager/grant';
 
@@ -74,6 +77,9 @@ export default class {
   presence: Function;
   unsubscribe: Function;
   unsubscribeAll: Function;
+
+  // Objects API
+  createUser: Function;
 
   disconnect: Function;
   reconnect: Function;
@@ -178,6 +184,13 @@ export default class {
     this.deleteMessages = endpointCreator.bind(this, modules, deleteMessagesEndpointConfig);
     this.messageCounts = endpointCreator.bind(this, modules, messageCountsEndpointConfig);
     this.fetchMessages = endpointCreator.bind(this, modules, fetchMessagesEndpointConfig);
+
+    // Objects API
+    this.createUser = endpointCreator.bind(
+      this,
+      modules,
+      createUserEndpointConfig
+    );
 
     this.time = timeEndpoint;
 

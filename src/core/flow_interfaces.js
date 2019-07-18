@@ -384,6 +384,26 @@ type PublishArguments = {
   replicate: boolean | null // indicates to server on replication status to other data centers.
 }
 
+// Users Object
+type UsersObjectInput = {
+  id: string,
+  name: string,
+  externalId?: string,
+  profileUrl?: string,
+  email?: string,
+  custom?: Object,
+};
+
+type UsersResponse = {
+  status: string,
+  data: {
+    ...UsersObjectInput,
+    created: string,
+    updated: string,
+    eTag: string,
+  },
+};
+
 //
 
 type ModulesInject = {
