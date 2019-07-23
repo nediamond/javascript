@@ -137,11 +137,11 @@ export default class {
   adaptStateChange(args: StateArgs, callback: Function) {
     const { state, channels = [], channelGroups = [] } = args;
 
-    channels.forEach(channel => {
+    channels.forEach((channel) => {
       if (channel in this._channels) this._channels[channel].state = state;
     });
 
-    channelGroups.forEach(channelGroup => {
+    channelGroups.forEach((channelGroup) => {
       if (channelGroup in this._channelGroups) {
         this._channelGroups[channelGroup].state = state;
       }
@@ -162,20 +162,20 @@ export default class {
         this._heartbeatChannelGroups[channelGroup] = { state: {} };
       });
     } else {
-      channels.forEach(channel => {
+      channels.forEach((channel) => {
         if (channel in this._heartbeatChannels) {
           delete this._heartbeatChannels[channel];
         }
       });
 
-      channelGroups.forEach(channelGroup => {
+      channelGroups.forEach((channelGroup) => {
         if (channelGroup in this._heartbeatChannelGroups) {
           delete this._heartbeatChannelGroups[channelGroup];
         }
       });
 
       if (this._config.suppressLeaveEvents === false) {
-        this._leaveEndpoint({ channels, channelGroups }, status => {
+        this._leaveEndpoint({ channels, channelGroups }, (status) => {
           this._listenerManager.announceStatus(status);
         });
       }
@@ -207,6 +207,7 @@ export default class {
     }
 
     // reset the current timetoken to get a connect event.
+    // $FlowFixMe
     if (this._currentTimetoken !== '0' && this._currentTimetoken !== 0) {
       this._storedTimetoken = this._currentTimetoken;
       this._currentTimetoken = 0;
@@ -241,7 +242,7 @@ export default class {
     const actualChannelGroups = [];
     //
 
-    channels.forEach(channel => {
+    channels.forEach((channel) => {
       if (channel in this._channels) {
         delete this._channels[channel];
         actualChannels.push(channel);
@@ -256,7 +257,7 @@ export default class {
       }
     });
 
-    channelGroups.forEach(channelGroup => {
+    channelGroups.forEach((channelGroup) => {
       if (channelGroup in this._channelGroups) {
         delete this._channelGroups[channelGroup];
         actualChannelGroups.push(channelGroup);
@@ -279,7 +280,7 @@ export default class {
     if (this._config.suppressLeaveEvents === false && !isOffline) {
       this._leaveEndpoint(
         { channels: actualChannels, channelGroups: actualChannelGroups },
-        status => {
+        (status) => {
           status.affectedChannels = actualChannels;
           status.affectedChannelGroups = actualChannelGroups;
           status.currentTimetoken = this._currentTimetoken;
@@ -352,6 +353,7 @@ export default class {
     }
 
     this._performHeartbeatLoop();
+    // $FlowFixMe
     this._heartbeatTimer = setInterval(
       this._performHeartbeatLoop.bind(this),
       this._config.getHeartbeatInterval() * 1000
@@ -360,6 +362,7 @@ export default class {
 
   _stopHeartbeatTimer() {
     if (this._heartbeatTimer) {
+      // $FlowFixMe
       clearInterval(this._heartbeatTimer);
       this._heartbeatTimer = null;
     }
@@ -376,14 +379,14 @@ export default class {
       return;
     }
 
-    this.getSubscribedChannels().forEach(channel => {
+    this.getSubscribedChannels().forEach((channel) => {
       let channelState = this._channels[channel].state;
       if (Object.keys(channelState).length) {
         presenceState[channel] = channelState;
       }
     });
 
-    this.getSubscribedChannelGroups().forEach(channelGroup => {
+    this.getSubscribedChannelGroups().forEach((channelGroup) => {
       let channelGroupState = this._channelGroups[channelGroup].state;
       if (Object.keys(channelGroupState).length) {
         presenceState[channelGroup] = channelGroupState;
@@ -423,7 +426,7 @@ export default class {
     let channels = [];
     let channelGroups = [];
 
-    Object.keys(this._channels).forEach(channel => {
+    Object.keys(this._channels).forEach((channel) => {
       let channelState = this._channels[channel].state;
 
       if (Object.keys(channelState).length) {
@@ -432,11 +435,11 @@ export default class {
 
       channels.push(channel);
     });
-    Object.keys(this._presenceChannels).forEach(channel => {
+    Object.keys(this._presenceChannels).forEach((channel) => {
       channels.push(`${channel}-pnpres`);
     });
 
-    Object.keys(this._channelGroups).forEach(channelGroup => {
+    Object.keys(this._channelGroups).forEach((channelGroup) => {
       let channelGroupState = this._channelGroups[channelGroup].state;
 
       if (Object.keys(channelGroupState).length) {
@@ -445,7 +448,7 @@ export default class {
 
       channelGroups.push(channelGroup);
     });
-    Object.keys(this._presenceChannelGroups).forEach(channelGroup => {
+    Object.keys(this._presenceChannelGroups).forEach((channelGroup) => {
       channelGroups.push(`${channelGroup}-pnpres`);
     });
 
@@ -558,7 +561,7 @@ export default class {
       this._listenerManager.announceStatus(countAnnouncement);
     }
 
-    messages.forEach(message => {
+    messages.forEach((message) => {
       let channel = message.channel;
       let subscriptionMatch = message.subscriptionMatch;
       let publishMetaData = message.publishMetaData;
