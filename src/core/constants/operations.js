@@ -12,6 +12,9 @@ export default {
   PNUnsubscribeOperation: 'PNUnsubscribeOperation',
   PNPublishOperation: 'PNPublishOperation',
 
+  // Objects API
+  PNUpdateSpaceOperation: 'PNUpdateSpaceOperation',
+
   // push
   PNPushNotificationEnabledChannelsOperation: 'PNPushNotificationEnabledChannelsOperation',
   PNRemoveAllPushNotificationsOperation: 'PNRemoveAllPushNotificationsOperation',

@@ -385,6 +385,25 @@ type PublishArguments = {
   replicate: boolean | null // indicates to server on replication status to other data centers.
 }
 
+// Spaces Object
+
+type SpacesObjectInput = {
+  id: string,
+  name: string,
+  description?: String,
+  custom?: Object,
+};
+
+type SpacesResponse = {
+  status: number,
+  data: {
+    ...SpacesObjectInput,
+    created: string,
+    updated: string,
+    eTag: string,
+  },
+};
+
 //
 
 type ModulesInject = {
