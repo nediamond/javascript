@@ -65,6 +65,12 @@ export function get(params: Object, endpoint: EndpointDefinition, callback: Func
   return xdr.call(this, 'GET', url, params, '', endpoint, callback);
 }
 
+export function patch(params: Object, body: string, endpoint: EndpointDefinition, callback: Function) {
+  let url = this.getStandardOrigin() + endpoint.url;
+
+  return xdr.call(this, 'PATCH', url, params, body, endpoint, callback);
+}
+
 export function post(params: Object, body: string, endpoint: EndpointDefinition, callback: Function) {
   let url = this.getStandardOrigin() + endpoint.url;
 

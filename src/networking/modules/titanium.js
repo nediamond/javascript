@@ -94,6 +94,13 @@ export function post(params: Object, body: string, endpoint: EndpointDefinition,
 
   return xdr.call(this, xhr, 'POST', url, params, JSON.parse(body), endpoint, callback);
 }
+export function patch(params: Object, body: string, endpoint: EndpointDefinition, callback: Function) {
+  let xhr = getHttpClient();
+
+  let url = this.getStandardOrigin() + endpoint.url;
+
+  return xdr.call(this, xhr, 'PATCH', url, params, JSON.parse(body), endpoint, callback);
+}
 
 export function del(params: Object, endpoint: EndpointDefinition, callback: Function) {
   let xhr = getHttpClient();
