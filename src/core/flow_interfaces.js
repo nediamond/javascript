@@ -384,6 +384,68 @@ type PublishArguments = {
   replicate: boolean | null // indicates to server on replication status to other data centers.
 }
 
+// Users Object
+
+type UserObjectInput = {
+  id: string,
+  name: string,
+  externalId?: string,
+  profileUrl?: string,
+  email?: string,
+  custom?: Object,
+};
+
+type UserResponse = {
+  status: number,
+  data: {
+    ...UserObjectInput,
+    created: string,
+    updated: string,
+    eTag: string,
+  },
+};
+
+// Memberships Object
+
+type MembersInput = {
+  spaceId: string,
+  limit?: number,
+  page?: {
+    next?: string,
+    prev?: string,
+  },
+  include?: {
+    totalCount?: boolean,
+    customFields?: boolean,
+    userFields?: boolean,
+    customUserFields?: boolean,
+  }
+}
+
+type MembersObjectInput = {
+  id: string,
+  custom?: Object,
+  user?: UserResponse,
+};
+
+type MembersResponse = {
+  status: number,
+  data: {
+    ...MembersObjectInput,
+    created: string,
+    updated: string,
+    eTag: string,
+  },
+};
+
+type MembersListResponse = {
+  status: number,
+  totalCount: number,
+  next: String,
+  prev: String,
+  data: Array<MembersResponse>,
+};
+
 //
 
 type ModulesInject = {
