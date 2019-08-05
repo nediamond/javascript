@@ -43,9 +43,6 @@ export function prepareParams(
   const { include, limit, page } = incomingParams;
   const params = {};
 
-  // it is a paged list of users so include the total count in the response  params.count = true;
-  params.count = true;
-
   if (limit) {
     params.limit = limit;
   }
