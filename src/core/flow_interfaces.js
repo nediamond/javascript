@@ -392,6 +392,9 @@ type SpacesObjectInput = {
   name: string,
   description?: String,
   custom?: Object,
+  include?: {
+    customFields?: boolean,
+  }
 };
 
 type SpacesResponse = {

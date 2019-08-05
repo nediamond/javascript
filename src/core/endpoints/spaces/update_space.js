@@ -73,11 +73,21 @@ export function prepareParams(
   modules: ModulesInject,
   incomingParams: SpacesObjectInput
 ): Object {
-  let { channelGroups = [] } = incomingParams;
-  let params = {};
+  const { include } = incomingParams;
+  const params = {};
 
-  if (channelGroups.length > 0) {
-    params['channel-group'] = channelGroups.join(',');
+  if (include) {
+    let includes = [];
+
+    if (include.customFields) {
+      includes.push('custom');
+    }
+
+    let includesString = includes.join(',');
+
+    if (includesString.length > 0) {
+      params.include = includesString;
+    }
   }
 
   return params;
