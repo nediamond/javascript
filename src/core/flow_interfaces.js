@@ -392,6 +392,9 @@ type UsersObjectInput = {
   profileUrl?: string,
   email?: string,
   custom?: Object,
+  include?: {
+    customFields?: boolean,
+  }
 };
 
 type UsersResponse = {

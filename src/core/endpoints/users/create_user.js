@@ -36,7 +36,7 @@ export function validateParams(
   if (custom) {
     if (
       !Object.values(custom).every(
-        value =>
+        (value) =>
           typeof value === 'string' ||
           typeof value === 'number' ||
           typeof value === 'boolean'
@@ -74,14 +74,27 @@ export function isAuthSupported() {
 }
 
 export function prepareParams(
-  // eslint-disable-next-line no-unused-vars
   modules: ModulesInject,
-  // eslint-disable-next-line no-unused-vars
   incomingParams: UsersObjectInput
 ): Object {
-  // Just applying the incoming params for now, this space will be used for possible future additions
+  const { include } = incomingParams;
+  const params = {};
 
-  return {};
+  if (include) {
+    let includes = [];
+
+    if (include.customFields) {
+      includes.push('custom');
+    }
+
+    let includesString = includes.join(',');
+
+    if (includesString.length > 0) {
+      params.include = includesString;
+    }
+  }
+
+  return params;
 }
 
 export function postPayload(
