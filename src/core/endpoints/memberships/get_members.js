@@ -54,25 +54,25 @@ export function prepareParams(
     let includes = [];
 
     if (include.totalCount) {
-      includes.push('totalCount');
+      params.count = true;
     }
 
     if (include.customFields) {
-      includes.push('customFields');
+      includes.push('custom');
     }
 
     if (include.userFields) {
-      includes.push('userFields');
+      includes.push('user');
     }
 
     if (include.customUserFields) {
-      includes.push('customUserFields');
+      includes.push('user.custom');
     }
 
     let includesString = includes.join(',');
 
     if (includesString.length > 0) {
-      params.include = includes.join(',');
+      params.include = includesString;
     }
   }
 
