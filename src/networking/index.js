@@ -70,6 +70,7 @@ export default class {
 
   // origin operations
   shiftStandardOrigin(failover: boolean = false): string {
+    // $FlowFixMe
     this._standardOrigin = this.nextOrigin(failover);
 
     return this._standardOrigin;

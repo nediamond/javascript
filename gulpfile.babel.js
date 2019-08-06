@@ -12,17 +12,19 @@ const rename = require('gulp-rename');
 const exec = require('child_process').exec;
 const Karma = require('karma').Server;
 const mocha = require('gulp-mocha');
-const runSequence = require('run-sequence');
+const runSequence = require('gulp4-run-sequence');
 const gulpIstanbul = require('gulp-istanbul');
-const isparta = require('isparta');
 const sourcemaps = require('gulp-sourcemaps');
 const packageJSON = require('./package.json');
 const gzip = require('gulp-gzip');
 const unzip = require('gulp-unzip');
 
+// increase mocha timeout from default of 2000 to allow long running async tests to complete
+const mochaTimeout = 5000;
+
 gulp.task('clean', () => {
   return gulp
-    .src(['lib', 'dist', 'coverage', 'upload'], { read: false })
+    .src(['lib', 'dist', 'coverage', 'upload'], { read: false, allowEmpty: true })
     .pipe(clean());
 });
 
@@ -123,10 +125,9 @@ gulp.task('validate', gulp.series('lint', 'flow'));
 
 gulp.task('pre-test', () => {
   return gulp
-    .src(['src/**/*.js'])
+    .src(['lib/**/*.js'])
     .pipe(
       gulpIstanbul({
-        instrumenter: isparta.Instrumenter,
         includeAllSources: true,
       })
     )
@@ -137,6 +138,11 @@ gulp.task('test_web', done => {
   new Karma(
     {
       configFile: path.join(__dirname, '/karma/web.config.js'),
+      client: {
+        mocha: {
+          timeout: mochaTimeout
+        }
+      },
     },
     done
   ).start();
@@ -145,7 +151,7 @@ gulp.task('test_web', done => {
 gulp.task('test_node', () => {
   return gulp
     .src(['test/**/*.test.js', '!test/dist/*.js'], { read: false })
-    .pipe(mocha({ reporter: 'spec' }))
+    .pipe(mocha({ reporter: 'spec', timeout: mochaTimeout }))
     .pipe(gulpIstanbul.writeReports({ reporters: ['json', 'lcov', 'text'] }));
 });
 
@@ -153,6 +159,11 @@ gulp.task('test_titanium', gulp.series('unzip_titanium_sdk'), done => {
   new Karma(
     {
       configFile: path.join(__dirname, '/karma/titanium.config.js'),
+      client: {
+        mocha: {
+          timeout: mochaTimeout
+        }
+      },
     },
     done
   ).start();
@@ -161,14 +172,14 @@ gulp.task('test_titanium', gulp.series('unzip_titanium_sdk'), done => {
 gulp.task('test_react-native', () => {
   return gulp
     .src('test/dist/react-native.test.js', { read: false })
-    .pipe(mocha({ reporter: 'spec' }))
+    .pipe(mocha({ reporter: 'spec', timeout: mochaTimeout }))
     .pipe(gulpIstanbul.writeReports({ reporters: ['json', 'lcov', 'text'] }));
 });
 
 gulp.task('test_release', () => {
   return gulp
     .src('test/release/**/*.test.js', { read: false })
-    .pipe(mocha({ reporter: 'spec' }));
+    .pipe(mocha({ reporter: 'spec', timeout: mochaTimeout }));
 });
 
 gulp.task(

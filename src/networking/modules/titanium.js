@@ -1,5 +1,5 @@
 /* @flow */
-/* global XMLHttpRequest, window, console */
+/* global XMLHttpRequest, window */
 
 import {
   EndpointDefinition,

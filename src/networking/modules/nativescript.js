@@ -1,5 +1,4 @@
 /* @flow */
-/* global console */
 
 import { request as HttpRequest } from 'http';
 import {

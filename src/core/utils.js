@@ -26,6 +26,7 @@ function endsWith(searchString: string, suffix: string): boolean {
 function createPromise() {
   let successResolve;
   let failureResolve;
+  // $FlowFixMe
   let promise = new Promise((fulfill, reject) => {
     successResolve = fulfill;
     failureResolve = reject;

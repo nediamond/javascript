@@ -207,6 +207,7 @@ export default class {
     }
 
     // reset the current timetoken to get a connect event.
+    // $FlowFixMe
     if (this._currentTimetoken !== '0' && this._currentTimetoken !== 0) {
       this._storedTimetoken = this._currentTimetoken;
       this._currentTimetoken = 0;
@@ -352,6 +353,7 @@ export default class {
     }
 
     this._performHeartbeatLoop();
+    // $FlowFixMe
     this._heartbeatTimer = setInterval(
       this._performHeartbeatLoop.bind(this),
       this._config.getHeartbeatInterval() * 1000
@@ -360,6 +362,7 @@ export default class {
 
   _stopHeartbeatTimer() {
     if (this._heartbeatTimer) {
+      // $FlowFixMe
       clearInterval(this._heartbeatTimer);
       this._heartbeatTimer = null;
     }
